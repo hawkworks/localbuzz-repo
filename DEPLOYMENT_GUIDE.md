@@ -141,24 +141,6 @@ LocalBuzzは、以下のアーキテクチャパターンに基づいて設計�
 
 アプリケーションの設定は、環境変数または設定ファイルを通じて管理されます。本番環境では、セキュリティを考慮した設定管理が重要です。
 
-#### 主要な環境変数（抜粋）
-
-**バックエンド（NestJS）**
-- `PORT`
-- `DB_HOST` / `DB_PORT` / `DB_USERNAME` / `DB_PASSWORD` / `DB_NAME`
-- `JWT_SECRET`
-- `OPENAI_API_KEY`（口コミ返信生成など）
-- `SENDGRID_API_KEY`
-- `SENDGRID_FROM_EMAIL`
-- `SENDGRID_FROM_NAME`
-- `FRONTEND_URL`（パスワード再設定メールのリンク生成に使用）
-- `GCP_PROJECT_ID` / `GCP_SERVICE_ACCOUNT_EMAIL` / `GCP_SERVICE_ACCOUNT_KEY_PATH`
-
-**フロントエンド（Next.js）**
-- `.env` に API の接続先（`API_URL` など）を設定
-
-※ 使っていない機能の環境変数は空でも起動可能ですが、該当機能は動作しません。
-
 #### セキュリティ設定
 
 以下のセキュリティ設定を実施してください：
@@ -442,29 +424,6 @@ APIのレスポンス時間を測定し、許容範囲内であることを確�
 ---
 
 ## 運用とメンテナンス
-
-### PM2運用（推奨）
-
-#### 起動例
-
-```bash
-# Backend
-cd /path/to/lamp-repo/apps/backend
-pm2 start npm --name localbuzz-backend -- run start:prod
-
-# Frontend
-cd /path/to/lamp-repo/apps/frontend
-pm2 start npm --name localbuzz-frontend -- run start -- --port 3200
-```
-
-#### プロセス保存
-
-```bash
-pm2 save
-pm2 status
-pm2 logs localbuzz-backend
-pm2 logs localbuzz-frontend
-```
 
 ### ログ管理
 

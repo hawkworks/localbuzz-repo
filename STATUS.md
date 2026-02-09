@@ -9,7 +9,7 @@
 
 ## 全体の見方（短く把握したい人向け）
 - 利用・運用・デプロイのガイドは一通り整備済み
-- バックエンドの一部機能に未実装が残っている
+- 現時点で未実装として明示された機能はなし
 - 詳細な進捗は Issue / ボードなどのタスク管理で追うのが確実
 
 ## 完了（ドキュメントで確認できる範囲）
@@ -21,26 +21,30 @@
 - パスワードリセット（/forgot-password、メール送信）
 - ユーザー向けプラン管理（/plan-management）
 - Google投稿の予約公開（公開日時指定・自動公開）
+- 口コミ生成 API / UI（/reviews/generate）
+  - 以前: 未実装（例外で停止）
+  - 現在: 実装済み（API + 生成UI + バリデーション）
+  - 補足: OpenAI APIキー未設定時はエラーを返す
+- 口コミレポートPDF出力（/reviews/reports/pdf）
+  - 以前: 未実装（404）
+  - 現在: 実装済み（オンデマンド生成・保存なし）
+- サブアカウント招待受諾のJWT発行（/sub-accounts/accept-invitation）
+  - 以前: 仮トークン
+  - 現在: 実JWTを発行（JWT秘密鍵で署名、期限7日）
+- 管理画面バックアップ履歴（/admin/system/settings）
+  - 以前: mock表示のみ
+  - 現在: APIから取得（バックアップ実行時に履歴を保存）
+- Googleアカウント連携（GBP認証）
+  - 以前: 認証状態が主アカウント前提
+  - 現在: GBP認証ステータスAPIで判定（サブアカウント対応）
+- 順位計測の実測（/rankings/keywords/:id/measure）
+  - 以前: ハッシュによる擬似値
+  - 現在: Google検索結果から実測（HTML解析）
+- Google投稿の実公開（/google-posts/:id/publish）
+  - 以前: ステータス更新のみ
+  - 現在: GBP APIへ実投稿（投稿IDを保存）
 
 ## 開発中 / 未実装（コードで確認できる範囲）
 以下はコード上で「未実装」「TODO」などが明示されている項目です。
 
-- 口コミ生成 API
-  - エンドポイント: POST /reviews/generate
-  - 現在の挙動: 未実装のため、例外を返して処理が止まる
-  - 該当ファイル: /home/ubuntu/data/lamp-repo/apps/backend/src/reviews/reviews.controller.ts
-- Google投稿の実公開（Google Business Profile API 連携）
-  - エンドポイント: POST /google-posts/:id/publish
-  - 現在の挙動: ステータス更新はするが、外部サービスへの実公開は行わない
-  - 該当ファイル: /home/ubuntu/data/lamp-repo/apps/backend/src/google-posts/google-posts.service.ts
-
-## 追加で確認したいポイント（運用ルールとして決めると良い）
-- 「完了」と判断する基準
-  - 例: API実装済み / テスト済み / ステージングで確認済み / 本番反映済み
-- 進捗管理の参照先
-  - 例: Issue/ボードのURL、運用ルール、更新担当者
-
-## 更新ルール（推奨）
-- 週次で更新する
-- リリース前後は必ず更新する
-- 機能の追加・変更があれば、必ず「完了」か「開発中/未実装」に反映する
+（現在、該当なし）
